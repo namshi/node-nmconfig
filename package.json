@@ -1,0 +1,32 @@
+{
+  "name": "nmConfig",
+  "version": "0.0.1",
+  "description": "Reconfig based Namshi style config files helper",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/namshi/node-nm-config.git"
+  },
+  "keywords": [
+    "config",
+    "reconfig",
+    "overlays"
+  ],
+  "author": "Luciano Colosio <unlucio@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/namshi/node-nm-config/issues"
+  },
+  "homepage": "https://github.com/namshi/node-nm-config",
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "file-ensure": "^0.3.0",
+    "js-yaml": "^3.2.7",
+    "lodash": "^3.7.0",
+    "mocha": "^2.2.4",
+    "reconfig": "^1.6.0"
+  }
+}
