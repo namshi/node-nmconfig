@@ -6,15 +6,15 @@ Handy and _strongly_ opinionated config helper on top of [Reconfig](https://gith
 
 ## Installation
 
-Install this library via [NPM](https://www.npmjs.org/package/reconfig):
+Install this library via [NPM](https://www.npmjs.org/package/node-nmconfig):
 
 ``` bash
-npm install nmconfig
+npm install node-nmconfig
 ```
 
 ## Usage
 ```javascript
-var config = require('nmconfig');
+var config = require('node-nmconfig');
 ```
 
 If you need it on the client side we highly recommend
