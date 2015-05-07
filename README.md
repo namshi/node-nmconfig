@@ -7,7 +7,7 @@ Handy and _strongly_ opinionated config helper on top of [reconfig](https://gith
 ## So what about it?
 Here in Namshi we like our configuration: incremental, overridable, and defined in a compact way.<br/>
 As well as we like to don't go nuts when we clone a project repo for the 1st time.<br/>
-This is way we came up with tools like [reconfig](https://github.com/namshi/reconfig) and [file-ensure](https://github.com/namshi/node-file-ensure). With nmConfig we put all this things together in a convenient lib that turns all of this in a matter of a `require()` instruction.
+This is why we came up with tools like [reconfig](https://github.com/namshi/reconfig) and [file-ensure](https://github.com/namshi/node-file-ensure). With nmConfig we put all this things together in a convenient lib that turns all of this in a matter of a `require()` instruction.
 
 ## What does it do:
 
@@ -55,7 +55,7 @@ console.log(config.get('characters.anakin'));
 // ==> 'sith'
 ```
 
-- Figures out a `recofig`'s env overrider prefix from your `package.json`:
+- Figures out a `reconfig`'s env overrider prefix from your `package.json`:
 
 ```javascript
 //pacakage.json
