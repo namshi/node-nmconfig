@@ -130,7 +130,7 @@ module.exports = function(options) {
   options.ensure && ensureFile(options.ensure);
 
   config = combineFiles(files);
-
+  config.rootDir = config.basedir = appRoot;
   (config.env === 'dev' || config.env === 'test') && console.log('----\nnmConfig, loading configuration object:\n %s\n----\n', JSON.stringify(config));  
 
   return new Reconfig(config, reconfigPrefix, reconfigSeparator);
