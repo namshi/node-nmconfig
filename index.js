@@ -131,7 +131,7 @@ module.exports = function(options) {
 
   config = combineFiles(files);
   config.rootDir = config.basedir = appRoot;
-  (config.env === 'dev' || config.env === 'test') && console.log('----\nnmConfig, loading configuration object:\n %s\n----\n', JSON.stringify(config));  
+  (config.env === 'dev' || config.env === 'test') && console.log('----\nnmConfig, loading configuration object:\n %s\n----\n', JSON.stringify(config, null, 2));  
 
   return new Reconfig(config, reconfigPrefix, reconfigSeparator);
 }
