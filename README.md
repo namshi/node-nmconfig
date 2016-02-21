@@ -48,6 +48,36 @@ will result in:
 }
 ```
 
+You can eventually define configuration paths in your app's `package.json` too, using your app's name as key,
+and they'll be added to the final configuration:
+
+```javascript
+
+// Put something like this in your package.json
+
+{
+  "name": "myConfigurableApp",
+  "version": "0.0.1",
+  "description": "I can configure apps",
+  "myConfigurableApp": {
+    "characters": {
+      "benSolo": "sith"
+    }
+  }
+
+// and you'll obtain:
+
+{
+  characters: {
+    yoda: 'jedi',
+    anakin: 'sith',
+    obiWan: 'jedi',
+    benSolo: 'sith'
+  }
+}
+
+```
+
 - returns you a `reconfig` instance:
 ```javascript
 console.log(config.get('characters.anakin'));
@@ -81,6 +111,9 @@ Options parameters:
 
 - **separator**: The separator Reconfig will use for console vars
                  overlays.
+
+- **projectName**: Defines Your project's name. If none is given, the project's name
+                   will be inferred form your package.json "name" value. All spaces will be removed.
 
 - **prefix**:    The prefix that Reconfig will use while grabbing
                  console variable and applying overlays.

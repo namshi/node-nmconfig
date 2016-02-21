@@ -7,7 +7,7 @@ var Reconfig = require('reconfig');
 var appRoot = require('app-root-path').path;
 var appPkgConf = require(appRoot + '/package.json');
 
-var appName = appPkgConf.name.toUpperCase().replace(/ /g, '');
+var appName = appPkgConf.name.replace(/ /g, '');
 var configDir = path.join(appRoot, 'config');
 var defaultFiles = (appPkgConf.nmConfig || {}).defaultFiles || ['base', 'dev.example', 'staging', 'live'];
 var env = 'dev';
@@ -20,7 +20,7 @@ if (!_.isArray(defaultFiles)) {
 
 /**
  * Automatically creates the config dir and its needed files
- * The needed file list can be customized adding a 
+ * The needed file list can be customized adding a
  * nmConfig.defaultFiles property in the project's package.json
  */
 function boostrapConfigDir() {
@@ -34,10 +34,11 @@ function boostrapConfigDir() {
 
 /**
  * Leverages on file ensure to ensure the wanted config file
- * 
+ *
  * @param  {String} fileName
+ * @param  {String} env
  */
-function ensureFile(fileName) {
+function ensureFile(fileName, env) {
   var file = path.join(configDir, fileName);
   var from = path.join(configDir, fileName.replace('yml', 'example.yml'));
   var options = {};
@@ -46,14 +47,23 @@ function ensureFile(fileName) {
     options.from = from;
   }
 
-  ensure(file, options);
+  try {
+    ensure(file, options);
+  } catch(error) {
+    if (env === 'dev') {
+      throw error;
+      return;
+    }
+
+    console.error('Cannot ensure file: ' + fileName + '. Error: ', error);
+  }
 }
 
 /**
  * Parses the list of yaml files in the fongi directory
  * combining then in a final javascript object to use
  * as reconfig config parameter
- * 
+ *
  * @param  {Array} files
  * @return {Object}
  */
@@ -70,6 +80,10 @@ function combineFiles(files) {
   return config;
 }
 
+function combinePackageConfig(config, name) {
+  return (appPkgConf[name]) ? _.merge(config, appPkgConf[name]) : config;
+}
+
 boostrapConfigDir();
 
 /**
@@ -80,31 +94,32 @@ boostrapConfigDir();
  *
  * Options parameters:
  *
- * baseFiles: A list of files creating the base configuration
- *            before applying the environment specific config.
- *            These files will be merged in order, the env file
- *            will be the last applied.
+ * baseFiles:   A list of files creating the base configuration
+ *              before applying the environment specific config.
+ *              These files will be merged in order, the env file
+ *              will be the last applied.
  *
- * separator: The separator Reconfig will use for console vars
- *            overlays.
+ * separator:   The separator Reconfig will use for console vars
+ *              overlays.
  *
- * prefix:    The prefix that Reconfig will use while grabbing
- *            console variable and applying overlays.
- *            Default value: PROJECTNAME_CONFIG (all uppercase) *
- * 
- * ensure:    Tells to nmConfig to check for the existence of <filename>.yml file.
- *            If a <fileName>.example.yml is found, it will be used to produce
- *            the ensured file.
- * 
- * env:       Forced value for the environment:
- *            by default nmConfig will read you env form:
- *            - PROJECTNAME_ENV *
- *            - NODE_ENV
- *            - or default to "dev"
- * 
- *   * The project name will be inferred form your package.json
- *     "name" value. All spaces will be removed.
- * 
+ * projectName: Defines Your project's name. If none is given, the project's name
+ *              will be inferred form your package.json "name" value. All spaces will be removed.
+ *
+ * prefix:      The prefix that Reconfig will use while grabbing
+ *              console variable and applying overlays.
+ *              Default value: PROJECTNAME_CONFIG (all uppercase) *
+ *
+ * ensure:      Tells to nmConfig to check for the existence of <filename>.yml file.
+ *              If a <fileName>.example.yml is found, it will be used to produce
+ *              the ensured file.
+ *
+ * env:         Forced value for the environment:
+ *              by default nmConfig will read you env form:
+ *              - PROJECTNAME_ENV *
+ *              - NODE_ENV
+ *              - or default to "dev"
+ *
+ *
  * @param  {Object} options
  * @return {Object}
  */
@@ -115,8 +130,8 @@ module.exports = function(options) {
   var reconfigSeparator = options.separator || '_';
   appName = options.projectName || appName;
   var shellVars = {
-    env: appName + '_ENV',
-    reconfigPrefix: appName + '_CONFIG'
+    env: appName.toUpperCase() + '_ENV',
+    reconfigPrefix: appName.toUpperCase() + '_CONFIG'
   };
   var reconfigPrefix = options.prefix || shellVars.reconfigPrefix;
   env = options.env || process.env[shellVars.env]|| process.env.NODE_ENV || 'dev';
@@ -127,11 +142,12 @@ module.exports = function(options) {
 
   files.push(env);
 
-  options.ensure && ensureFile(options.ensure);
+  options.ensure && ensureFile(options.ensure, env);
 
   config = combineFiles(files);
+  config = combinePackageConfig(config, appName);
   config.rootDir = config.basedir = appRoot;
-  (config.env === 'dev' || config.env === 'test') && console.log('----\nnmConfig, loading configuration object:\n %s\n----\n', JSON.stringify(config, null, 2));  
+  (config.env === 'dev' || config.env === 'test') && console.log('----\nnmConfig, loading configuration object:\n %s\n----\nYour environment config prefix is: ' + reconfigPrefix + '\n----\n', JSON.stringify(config, null, 2));  
 
   return new Reconfig(config, reconfigPrefix, reconfigSeparator);
 }
