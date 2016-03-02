@@ -22,11 +22,10 @@
   },
   "homepage": "https://github.com/namshi/node-nmconfig",
   "dependencies": {
-    "app-root-path": "^1.0.0",
-    "file-ensure": "^0.3.0",
-    "js-yaml": "^3.2.7",
-    "lodash": "^3.7.0",
-    "mocha": "^2.2.4",
-    "reconfig": "^1.6.0"
+    "app-root-path": "1.0.0",
+    "file-ensure": "0.3.0",
+    "js-yaml": "3.5.3",
+    "lodash": "4.5.1",
+    "reconfig": "2.1.0"
   }
 }
