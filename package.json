@@ -1,6 +1,6 @@
 {
   "name": "node-nmconfig",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Reconfig based Namshi style config files helper",
   "main": "index.js",
   "scripts": {
