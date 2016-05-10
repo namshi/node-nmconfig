@@ -74,7 +74,11 @@ function combineFiles(files) {
     var configFilePath = path.join(configDir, file + '.yml');
     var envConfig = yaml.safeLoad(fs.readFileSync(configFilePath, 'utf8'));
 
-    config = _.merge(config, envConfig);
+    config = _.mergeWith(config, envConfig, function(baseValue, envValue) {
+      if (_.isArray(baseValue) && _.isArray(envValue)) {
+        return envValue;
+      }
+    });
   });
 
   return config;
