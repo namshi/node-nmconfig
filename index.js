@@ -137,7 +137,7 @@ module.exports = function(options) {
     env: appName.toUpperCase() + '_ENV',
     reconfigPrefix: appName.toUpperCase() + '_CONFIG'
   };
-  var reconfigPrefix = options.prefix || shellVars.reconfigPrefix;
+  var reconfigPrefix = options.prefix || process.env.RECONFIG_PREFIX ||shellVars.reconfigPrefix;
   env = options.env || process.env[shellVars.env]|| process.env.NODE_ENV || 'dev';
 
   if (!_.isArray(files)) {
