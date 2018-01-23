@@ -15,7 +15,6 @@ var env = 'dev';
 if (!_.isArray(defaultFiles)) {
   console.error('nmConfig Error: nmConfig.defaultFiles MUST be an array. Please check your package.json');
   process.exit();
-  return;
 }
 
 /**
