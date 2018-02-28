@@ -26,6 +26,6 @@
     "file-ensure": "0.3.0",
     "js-yaml": "3.5.3",
     "lodash": "4.5.1",
-    "reconfig": "2.1.0"
+    "reconfig": "3.3.0"
   }
 }
