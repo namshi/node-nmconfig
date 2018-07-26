@@ -128,6 +128,8 @@ Options parameters:
                   - NODE_ENV<br/>
                   - or default to "dev"
 
+NOTE: If you want to output the value of your system configuration on loading your config then you can set an option in your environment `config` file with a value of `verboseConfig: true` at the top level. If this is set then the config will be printed to `STDOUT`. 
+
 ## Installation
 
 Install this library via [NPM](https://www.npmjs.org/package/node-nmconfig):
