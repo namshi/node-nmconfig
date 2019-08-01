@@ -25,7 +25,7 @@
     "app-root-path": "1.0.0",
     "file-ensure": "0.3.0",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.11",
-    "reconfig": "2.1.0"
+    "lodash": "^4.17.15",
+    "reconfig": "^3.3.0"
   }
 }

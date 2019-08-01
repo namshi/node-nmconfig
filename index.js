@@ -152,5 +152,5 @@ module.exports = function(options) {
   config.rootDir = config.basedir = appRoot;
   (config.verboseConfig === true) && console.log('----\nnmConfig, loading configuration object:\n %s\n----\nYour environment config prefix is: ' + reconfigPrefix + '\n----\n', JSON.stringify(config, null, 2));  
 
-  return new Reconfig(config, reconfigPrefix, reconfigSeparator);
+  return new Reconfig(config, {envPrefix: reconfigPrefix, separator: reconfigSeparator});
 }
